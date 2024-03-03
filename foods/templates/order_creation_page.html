@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<br><br><br><br><br><br><br>
+<div class="container">
+    <div class="row" >
+        <div class="col-lg-4">
+            <div class="section-heading" >
+                <h6>My orders</h6>
+                <h2>Here You Can Make A Reservation Or Just walkin to our cafe</h2>
+            </div>
+        </div>
+    </div>
+  </div>
+ <br> <br><br>
+   <div class="container">
+       <div class="columns">
+           <div class="column">
+               <div class="box">
+                <h4>
+                    Shipping Information:
+                </h4>
+                <hr>
+                <form method="post" enctype="multipart/form-data" action="{% url 'foods:create_order' %} ">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="field">
+                        <label for="{{ field.id_for_label }}" class="label" >{{ field.label }}</label>
+                        {{ field }}
+                    </div>
+                    {% endfor %}
+                    <button type="submit" class="button is-fullwidth is-success" style="background-color: #fb5849;">Submit</button>
+                </form>
+               </div>
+           </div>
+           <div class="column is-6">
+               <div class="box">
+                   <a class="button is-danger" href="{% url 'foods:card_url' %}">Back to cart</a>
+                   <br><br>
+                   <table class="table is-fullwidth">
+                       <thead>
+                       <tr class="has-text-weight-bold">
+                           <td></td>
+                           <!-- <td>Customer</td> -->
+                           <td>Price</td>
+                           <td>Quantity</td>
+                           <td>Total</td>
+                           
+                       </tr>
+                       </thead>
+                       <tbody>
+                        {% for item in cart_items %}
+                        <tr>
+                            <td>
+                                
+                            </td>
+                            <!-- <td>{{ item }}</td> -->
+                            <td>{{ item.product.price }} $</td>
+                            <td>x {{ item.quantity }}</td>
+                            <td>{{ item.total_price }}</td>
+                        </tr>
+                     {% endfor %}
+                       </tbody>
+                   </table>
+                  <p class="title is-size-4">Total: {{ total_price }} sum </p>
+               </div>
+           </div>
+       </div>
+   </div>
+
+  <footer style="margin-top: 100px;background-color: white;"></footer>
+{% endblock %}
